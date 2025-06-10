@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Arvore-png_0: 7893398662680891526
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

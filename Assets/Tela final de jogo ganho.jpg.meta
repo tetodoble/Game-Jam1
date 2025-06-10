@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Tela final de jogo ganho_0: 1284935470057087635
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
