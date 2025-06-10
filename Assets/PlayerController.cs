@@ -119,4 +119,19 @@ public class MegaManController : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
+<<<<<<< Updated upstream
 }
+=======
+
+    void HandleAnimation()
+    {
+        // Define velocidade horizontal para transição Idle <-> Run
+        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+
+        // Define se está pulando para ativar animação de pulo
+        anim.SetBool("IsJumping", !isGrounded);
+        Debug.Log("Speed: " + Mathf.Abs(rb.linearVelocity.x));
+
+    }
+}
+>>>>>>> Stashed changes
