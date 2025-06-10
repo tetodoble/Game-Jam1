@@ -1,32 +1,50 @@
 using UnityEngine;
+using System.Collections;
 
 public class MegaManController : MonoBehaviour
 {
+    [Header("Movimento")]
     public float moveSpeed = 5f;
     public float jumpForce = 8f;
+
+    [Header("Pulo")]
     public Transform groundCheck;
     public LayerMask groundLayer;
     public float groundCheckRadius = 0.2f;
     public float fallMultiplier = 3f;
 
+    [Header("Dash")]
+    public float dashSpeed = 15f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 1f;
+
     private Rigidbody2D rb;
-    private bool isGrounded;
     private Animator anim;
 
+    private bool isGrounded;
+    private bool isDashing = false;
+    private bool canDash = true;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
     }
 
     void Update()
     {
-        Move();
-        HandleJumpInput();
-        FallFaster();
-        HandleAnimation();
+        if (!isDashing)
+        {
+            Move();
+            HandleJumpInput();
+            FallFaster();
+            HandleAnimation();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && canDash)
+        {
+            StartCoroutine(PerformDash());
+        }
     }
 
     void FixedUpdate()
@@ -66,6 +84,33 @@ public class MegaManController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
+    void HandleAnimation()
+    {
+        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+        anim.SetBool("IsJumping", !isGrounded);
+    }
+
+    private IEnumerator PerformDash()
+    {
+        isDashing = true;
+        canDash = false;
+
+        // Ativa trigger no Animator
+        anim.SetTrigger("DashTrigger");
+
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.linearVelocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
+
+        yield return new WaitForSeconds(dashDuration);
+
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
@@ -74,16 +119,4 @@ public class MegaManController : MonoBehaviour
             Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
         }
     }
-
-    void HandleAnimation()
-    {
-        // Define velocidade horizontal para transição Idle <-> Run
-        anim.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
-
-        // Define se está pulando para ativar animação de pulo
-        anim.SetBool("IsJumping", !isGrounded);
-        Debug.Log("Speed: " + Mathf.Abs(rb.linearVelocity.x));
-
-    }
-
 }

@@ -329,6 +329,9 @@ MonoBehaviour:
     m_Bits: 64
   groundCheckRadius: 0.2
   fallMultiplier: 2.5
+  dashSpeed: 15
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!114 &526777385
 MonoBehaviour:
   m_ObjectHideFlags: 0
