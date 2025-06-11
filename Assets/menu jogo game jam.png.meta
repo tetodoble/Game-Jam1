@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      menu jogo game jam_0: 1402376648484922726
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
